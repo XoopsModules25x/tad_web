@@ -1,3 +1,121 @@
+Tad Web 1.8.8 (Released on 2020-10-28)
+================================================
+1. Modify the default drawing mechanism to save a lot of space.
+2.Fix the problem that other class networks can't join the same photo album when sharing Google photo album.
+3. Modify the search box to change the search scope to the content of the class network.
+4.Fix the incorrect title map in mobile version.
+
+
+Tad Web 1.8.7 (Released on 2020-09-01)
+=============================================================
+1.Fix the problem of not being able to capture Google Shared Photo Album correctly.
+2.Fix the problem of not being able to import student data.
+3.Fix the problem of not being able to seat
+
+Tad Web 1.8.6 (Released on 2020-07-25)
+=============================================================
+1.Fix the problem of not being able to capture Google Shared Photo Album correctly.
+
+Tad Web 1.8.5 (2020-04-24 released)
+====================================================
+1. Fix the problem that categories cannot be added when creating categories at the same time
+2. Fix the problem that the scenery occasionally runs away.
+
+Tad Web 1.8.4 (2020-04-23 released)
+====================================================
+1. "Activity Silhouette" supports direct reading of Google shared photo album
+2. "Event Silhouette Show" section with optional photo album setting
+2. New "Event Silhouette Photo" section
+
+Tad Web 1.8.3 (2020-04-21 released)
+====================================================
+1. Integrate and optimize BootStrap3 and BootStrap4 templates.
+2. Modify two air quality blocks
+3. Change the block setting button to auto appear.
+4. Share the work and add the file function (it can be used as a sample or a topic for the assignment, study sheet, etc.)
+5. Complete the classification permission setting function.
+
+Tad Web 1.8.2 (2020-03-15 released)
+====================================================
+1. Correction for accessibility 2.0 AA standard
+2. Remove invalid plug-ins
+
+Tad Web 1.8.1 (2020-01-09 released)
+====================================================
+1.Reflected XSS bug fixes
+
+Tad Web 1.8 (2019-10-14 released)
+=========================================================
+1. Fix the problem that the little helper can't work properly
+
+Tad Web 1.7.9 (2019-05-02 released)
+=========================================================
+1. Fixed custom block editing problem
+2. Fixed the problem that the student roster could not be imported.
+3. Fixed class management class recurring problems
+4. Join the off class function
+5. Fix the problem of incorrect use of space
+6. Fixed the problem that the classification setting could not be used normally.
+
+Tad Web 1.7.8 (2019-05-10 released)
+=========================================================
+1. Support XOOPS 2.5.10
+2. No longer supports PHP 5.3
+
+Tad Web 1.7.7 (2019-01-01 released)
+=========================================================== ==
+  1. Added "Auto Skip" image auto play settings
+  2. Fix the problem that the used space is not displayed correctly.
+  3. Initial completion of accessibility 2.0 testing
+  4. Fix the problem that the middle block will not appear when there is no content.
+  5. Remove the site owner as a co-administrator
+  6. Strengthen variable filtering
+  7. Fix problems that may not be found after the contact book is saved.
+  8. Remove Big5 Chinese language
+  9. Support BootStrap4
+ 10. Support PHP 7.3
+ 11. Support MySQL database strict mode
+ 12. Set the class name as the default category
+
+
+Tad Web 1.7.6 (2017-01-26 released)
+================================================== ==
+  1. Fix block json file content is not correct
+
+Tad Web 1.7.5 (2017-11-21 released)
+====================================================
+  1. Correct the file can not be deleted correctly
+  2  correction function settings can not use the problem
+  3. Support PHP7.1
+  4. Correct "small helper" function related permissions
+
+
+Tad Web 1.7.4 (2017-10-06 released)
+====================================================
+  1. Modify some link
+  2. Accelerate the backspace management page
+  3. Fix the calendar can not display the problem
+
+
+Tad Web 1.7.3 (2017-09-27 released)
+================================================== ==
+  1. Simplified website settings page
+  2. Fixed the problem that the closed block will be reopened after saving the plug-in settings.
+  3. Link and video join sorting
+  4. Add the change manager (mentor) name function
+  5. After the classification is closed, the content is still a problem
+  6. Discussion area plus message sort setting
+  7. The calendar is set on the first day of the week
+  8. The message content will automatically add the URL
+  9. Resolve issues that "article list", "latest news" phone editing will not show
+10. Speed up the management of background space
+11. Resolve the "article menu" block can not display the problem
+12. Resolve the file block can not show the uploader's problem
+13. If you do not set the schedule, you will not be able to display the problem
+14. Solve the income limit of the Account books
+
+
+
 Tad Web 1.7.2 (2017-01-08 released)
 ====================================================
 1. Account books open to parents to watch

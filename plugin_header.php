@@ -6,20 +6,16 @@ $web_all_config = get_web_all_config($WebID);
 $show_plugin = true;
 if ($WebID) {
     define('_DISPLAY_MODE', 'home_plugin');
-    $show_plugin = strrpos($web_all_config['web_plugin_enable_arr'], $plugin) !== false ? true : false;
+    $show_plugin = false !== mb_strrpos($web_all_config['web_plugin_enable_arr'], $plugin) ? true : false;
 } else {
     define('_DISPLAY_MODE', 'index_plugin');
 }
 
 if ($show_plugin) {
-    if (!empty($WebID)) {
-        $xoopsOption['template_main'] = 'tad_web_tpl_b3.html';
-    } else {
-        $xoopsOption['template_main'] = set_bootstrap('tad_web_tpl.html');
-    }
+    $GLOBALS['xoopsOption']['template_main'] = 'tad_web_tpl.tpl';
 } else {
-    $xoopsOption['template_main'] = 'tad_web_unable_b3.html';
+    $GLOBALS['xoopsOption']['template_main'] = 'tad_web_unable.tpl';
 }
 
-include_once "plugins/{$plugin}/class.php";
+require_once "plugins/{$plugin}/class.php";
 $$plugin_name = new $plugin_name($WebID);

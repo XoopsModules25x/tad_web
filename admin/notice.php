@@ -1,9 +1,14 @@
 <?php
+use Xmf\Request;
+use XoopsModules\Tadtools\CkEditor;
+use XoopsModules\Tadtools\FormValidator;
+use XoopsModules\Tadtools\SweetAlert;
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_web_adm_notice.html";
-include_once 'header.php';
-include_once "../function.php";
-include_once "../class/cate.php";
+$xoopsOption['template_main'] = 'tad_web_adm_notice.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
+require_once dirname(__DIR__) . '/class/WebCate.php';
 /*-----------function區--------------*/
 //tad_web_notice編輯表單
 function tad_web_notice_form($NoticeID = '')
@@ -17,7 +22,7 @@ function tad_web_notice_form($NoticeID = '')
     if (!empty($NoticeID)) {
         $DBV = get_tad_web_notice($NoticeID);
     } else {
-        $DBV = array();
+        $DBV = [];
     }
 
     //預設值設定
@@ -38,37 +43,27 @@ function tad_web_notice_form($NoticeID = '')
     $NoticeWho = !isset($DBV['NoticeWho']) ? explode(';', _MA_TADWEB_NOTICEWHO_DEF) : explode(';', $DBV['NoticeWho']);
     $xoopsTpl->assign('NoticeWho', $NoticeWho);
     //設定 NoticeDate 欄位的預設值
-    $NoticeDate = !isset($DBV['NoticeDate']) ? date("Y-m-d H:i:s") : $DBV['NoticeDate'];
+    $NoticeDate = !isset($DBV['NoticeDate']) ? date('Y-m-d H:i:s') : $DBV['NoticeDate'];
     $xoopsTpl->assign('NoticeDate', $NoticeDate);
 
-    $op = empty($NoticeID) ? "insert_tad_web_notice" : "update_tad_web_notice";
+    $op = empty($NoticeID) ? 'insert_tad_web_notice' : 'update_tad_web_notice';
     //$op = "replace_tad_web_notice";
 
-    //套用formValidator驗證機制
-    if (!file_exists(TADTOOLS_PATH . "/formValidator.php")) {
-        redirect_header("index.php", 3, _TAD_NEED_TADTOOLS);
-    }
-    include_once TADTOOLS_PATH . "/formValidator.php";
-    $formValidator      = new formValidator("#myForm", true);
-    $formValidator_code = $formValidator->render();
+    $FormValidator = new FormValidator('#myForm', true);
+    $FormValidator->render();
 
-    //通知內容
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/ck.php")) {
-        redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . "/modules/tadtools/ck.php";
-    $ck = new CKEditor("tad_web", "NoticeContent", $NoticeContent);
-    $ck->setHeight(400);
-    $editor = $ck->render();
-    $xoopsTpl->assign('NoticeContent_editor', $editor);
+    $CkEditor = new CkEditor('tad_web', 'NoticeContent', $NoticeContent);
+    $CkEditor->setHeight(400);
+    $NoticeContent_editor = $CkEditor->render();
+    $xoopsTpl->assign('NoticeContent_editor', $NoticeContent_editor);
 
     //加入Token安全機制
-    include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-    $token      = new XoopsFormHiddenToken();
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $token = new \XoopsFormHiddenToken();
     $token_form = $token->render();
-    $xoopsTpl->assign("token_form", $token_form);
-    $xoopsTpl->assign('action', $_SERVER["PHP_SELF"]);
-    $xoopsTpl->assign('formValidator_code', $formValidator_code);
+    $xoopsTpl->assign('token_form', $token_form);
+    $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
+
     $xoopsTpl->assign('now_op', 'tad_web_notice_form');
     $xoopsTpl->assign('next_op', $op);
 }
@@ -83,20 +78,20 @@ function insert_tad_web_notice()
 
     //XOOPS表單安全檢查
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        $error = implode("<br />", $GLOBALS['xoopsSecurity']->getErrors());
+        $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header($_SERVER['PHP_SELF'], 3, $error);
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
-    $NoticeID      = intval($_POST['NoticeID']);
-    $NoticeTitle   = $myts->addSlashes($_POST['NoticeTitle']);
+    $NoticeID = (int) $_POST['NoticeID'];
+    $NoticeTitle = $myts->addSlashes($_POST['NoticeTitle']);
     $NoticeContent = $myts->addSlashes($_POST['NoticeContent']);
-    $NoticeWeb     = $myts->addSlashes($_POST['NoticeWeb']);
-    $NoticeWho     = implode(';', $_POST['NoticeWho']);
-    $NoticeDate    = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
+    $NoticeWeb = $myts->addSlashes($_POST['NoticeWeb']);
+    $NoticeWho = implode(';', $_POST['NoticeWho']);
+    $NoticeDate = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
-    $sql = "insert into `" . $xoopsDB->prefix("tad_web_notice") . "` (
+    $sql = 'insert into `' . $xoopsDB->prefix('tad_web_notice') . "` (
         `NoticeTitle`,
         `NoticeContent`,
         `NoticeWeb`,
@@ -109,7 +104,7 @@ function insert_tad_web_notice()
         '{$NoticeWho}',
         '{$NoticeDate}'
     )";
-    $xoopsDB->query($sql) or web_error($sql);
+    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $NoticeID = $xoopsDB->getInsertId();
@@ -127,27 +122,27 @@ function update_tad_web_notice($NoticeID = '')
 
     //XOOPS表單安全檢查
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        $error = implode("<br />", $GLOBALS['xoopsSecurity']->getErrors());
+        $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header($_SERVER['PHP_SELF'], 3, $error);
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
-    $NoticeID      = intval($_POST['NoticeID']);
-    $NoticeTitle   = $myts->addSlashes($_POST['NoticeTitle']);
+    $NoticeID = (int) $_POST['NoticeID'];
+    $NoticeTitle = $myts->addSlashes($_POST['NoticeTitle']);
     $NoticeContent = $myts->addSlashes($_POST['NoticeContent']);
-    $NoticeWeb     = $myts->addSlashes($_POST['NoticeWeb']);
-    $NoticeWho     = implode(';', $_POST['NoticeWho']);
-    $NoticeDate    = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
+    $NoticeWeb = $myts->addSlashes($_POST['NoticeWeb']);
+    $NoticeWho = implode(';', $_POST['NoticeWho']);
+    $NoticeDate = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
-    $sql = "update `" . $xoopsDB->prefix("tad_web_notice") . "` set
+    $sql = 'update `' . $xoopsDB->prefix('tad_web_notice') . "` set
        `NoticeTitle` = '{$NoticeTitle}',
        `NoticeContent` = '{$NoticeContent}',
        `NoticeWeb` = '{$NoticeWeb}',
        `NoticeWho` = '{$NoticeWho}',
        `NoticeDate` = '{$NoticeDate}'
     where `NoticeID` = '$NoticeID'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $NoticeID;
 }
@@ -164,10 +159,9 @@ function delete_tad_web_notice($NoticeID = '')
         return;
     }
 
-    $sql = "delete from `" . $xoopsDB->prefix("tad_web_notice") . "`
+    $sql = 'delete from `' . $xoopsDB->prefix('tad_web_notice') . "`
     where `NoticeID` = '{$NoticeID}'";
-    $xoopsDB->queryF($sql) or web_error($sql);
-
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 //以流水號秀出某筆tad_web_notice資料內容
@@ -177,16 +171,15 @@ function show_one_tad_web_notice($NoticeID = '')
 
     if (empty($NoticeID)) {
         return;
-    } else {
-        $NoticeID = intval($NoticeID);
     }
+    $NoticeID = (int) $NoticeID;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_web_notice") . "`
+    $sql = 'select * from `' . $xoopsDB->prefix('tad_web_notice') . "`
     where `NoticeID` = '{$NoticeID}' ";
     $result = $xoopsDB->query($sql)
-    or web_error($sql);
+    or Utility::web_error($sql, __FILE__, __LINE__);
     $all = $xoopsDB->fetchArray($result);
 
     //以下會產生這些變數： $NoticeID, $NoticeTitle, $NoticeContent, $NoticeWeb, $NoticeWho, $NoticeDate
@@ -195,9 +188,9 @@ function show_one_tad_web_notice($NoticeID = '')
     }
 
     //過濾讀出的變數值
-    $NoticeTitle   = $myts->htmlSpecialChars($NoticeTitle);
+    $NoticeTitle = $myts->htmlSpecialChars($NoticeTitle);
     $NoticeContent = $myts->displayTarea($NoticeContent, 1, 1, 0, 1, 0);
-    $NoticeWeb     = $myts->displayTarea($NoticeWeb, 0, 1, 0, 1, 1);
+    $NoticeWeb = $myts->displayTarea($NoticeWeb, 0, 1, 0, 1, 1);
     $NoticeWho_arr = explode(';', $NoticeWho);
 
     $xoopsTpl->assign('NoticeID', $NoticeID);
@@ -207,14 +200,8 @@ function show_one_tad_web_notice($NoticeID = '')
     $xoopsTpl->assign('NoticeWho', $NoticeWho);
     $xoopsTpl->assign('NoticeDate', $NoticeDate);
 
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php")) {
-        redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
-    }
-
-    include_once XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php";
-    $sweet_alert_obj            = new sweet_alert();
-    $delete_tad_web_notice_func = $sweet_alert_obj->render('delete_tad_web_notice_func', "{$_SERVER['PHP_SELF']}?op=delete_tad_web_notice&NoticeID=", "NoticeID");
-    $xoopsTpl->assign('delete_tad_web_notice_func', $delete_tad_web_notice_func);
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_tad_web_notice_func', "{$_SERVER['PHP_SELF']}?op=delete_tad_web_notice&NoticeID=", 'NoticeID');
 
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('now_op', 'show_one_tad_web_notice');
@@ -225,51 +212,47 @@ function list_tad_web_notice()
 {
     global $xoopsDB, $xoopsTpl, $isAdmin;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_web_notice") . "` order by `NoticeTitle`";
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_web_notice') . '` ORDER BY `NoticeTitle`';
 
     //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $PageBar = getPageBar($sql, 20, 10, null, null, 3);
-    $bar     = $PageBar['bar'];
-    $sql     = $PageBar['sql'];
-    $total   = $PageBar['total'];
+    $PageBar = Utility::getPageBar($sql, 20, 10, null, null, 3);
+    $bar = $PageBar['bar'];
+    $sql = $PageBar['sql'];
+    $total = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql)
-    or web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $all_content = '';
-    $i           = 0;
-    while ($all = $xoopsDB->fetchArray($result)) {
+    $all_content = [];
+    $i = 0;
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $NoticeID, $NoticeTitle, $NoticeContent, $NoticeWeb, $NoticeWho, $NoticeDate
         foreach ($all as $k => $v) {
             $$k = $v;
         }
 
         //過濾讀出的變數值
-        $NoticeTitle   = $myts->htmlSpecialChars($NoticeTitle);
+        $NoticeTitle = $myts->htmlSpecialChars($NoticeTitle);
         $NoticeContent = $myts->displayTarea($NoticeContent, 1, 1, 0, 1, 0);
-        $NoticeWeb     = $myts->displayTarea($NoticeWeb, 0, 1, 0, 1, 1);
+        $NoticeWeb = $myts->displayTarea($NoticeWeb, 0, 1, 0, 1, 1);
         $NoticeWho_arr = explode(';', $NoticeWho);
 
-        $all_content[$i]['NoticeID']      = $NoticeID;
-        $all_content[$i]['NoticeTitle']   = $NoticeTitle;
+        $all_content[$i]['NoticeID'] = $NoticeID;
+        $all_content[$i]['NoticeTitle'] = $NoticeTitle;
         $all_content[$i]['NoticeContent'] = $NoticeContent;
-        $all_content[$i]['NoticeWeb']     = $NoticeWeb;
-        $all_content[$i]['NoticeWho']     = $NoticeWho;
-        $all_content[$i]['NoticeDate']    = $NoticeDate;
+        $all_content[$i]['NoticeWeb'] = $NoticeWeb;
+        $all_content[$i]['NoticeWho'] = $NoticeWho;
+        $all_content[$i]['NoticeDate'] = $NoticeDate;
         $i++;
     }
 
-    //刪除確認的JS
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php")) {
-        redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php";
-    $sweet_alert_obj            = new sweet_alert();
-    $delete_tad_web_notice_func = $sweet_alert_obj->render('delete_tad_web_notice_func',
-        "{$_SERVER['PHP_SELF']}?op=delete_tad_web_notice&NoticeID=", "NoticeID");
-    $xoopsTpl->assign('delete_tad_web_notice_func', $delete_tad_web_notice_func);
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render(
+        'delete_tad_web_notice_func',
+        "{$_SERVER['PHP_SELF']}?op=delete_tad_web_notice&NoticeID=",
+        'NoticeID'
+    );
 
     $xoopsTpl->assign('bar', $bar);
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
@@ -279,11 +262,10 @@ function list_tad_web_notice()
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op       = system_CleanVars($_REQUEST, 'op', '', 'string');
-$WebID    = system_CleanVars($_REQUEST, 'WebID', 0, 'int');
-$CateID   = system_CleanVars($_REQUEST, 'CateID', 0, 'int');
-$NoticeID = system_CleanVars($_REQUEST, 'NoticeID', 0, 'int');
+$op = Request::getString('op');
+$WebID = Request::getInt('WebID');
+$CateID = Request::getInt('CateID');
+$NoticeID = Request::getInt('NoticeID');
 
 $xoopsTpl->assign('op', $op);
 
@@ -291,29 +273,25 @@ switch ($op) {
     /*---判斷動作請貼在下方---*/
 
     //新增資料
-    case "insert_tad_web_notice":
+    case 'insert_tad_web_notice':
         $NoticeID = insert_tad_web_notice();
         header("location: {$_SERVER['PHP_SELF']}?NoticeID=$NoticeID");
         exit;
         break;
-
     //更新資料
-    case "update_tad_web_notice":
+    case 'update_tad_web_notice':
         update_tad_web_notice($NoticeID);
         header("location: {$_SERVER['PHP_SELF']}?NoticeID=$NoticeID");
         exit;
         break;
-
-    case "tad_web_notice_form":
+    case 'tad_web_notice_form':
         tad_web_notice_form($NoticeID);
         break;
-
-    case "delete_tad_web_notice":
+    case 'delete_tad_web_notice':
         delete_tad_web_notice($NoticeID);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
         break;
-
     default:
         if (empty($NoticeID)) {
             list_tad_web_notice();
@@ -326,4 +304,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

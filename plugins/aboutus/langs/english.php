@@ -10,11 +10,11 @@ define('_MD_TCW_MEM_CLASSORGAN', 'School title');
 define('_MD_TCW_MEM_EXPERTISES', 'Specialty');
 define('_MD_TCW_MEMURL', 'Personal page');
 define('_MD_TCW_MEMTEAMORGAN', 'Team title');
-define("_MD_TCW_MEM_ABOUTME", "About");
+define('_MD_TCW_MEM_ABOUTME', 'About');
 define('_MD_TCW_MEMORDER', 'Sorting');
 define('_MD_TCW_MEMENABLE', 'State');
 define('_MD_TCW_UPLOAD_MY_PHOTO', 'Admin photo');
-define("_MD_TCW_UPLOAD_MEM_PHOTO", "photo");
+define('_MD_TCW_UPLOAD_MEM_PHOTO', 'photo');
 define('_MD_TCW_COMMING_SOON', 'Still working ...');
 define('_MD_TCW_CLASS_WEB_NAME', 'Class network name');
 define('_MD_TCW_IMPORT', 'Import');
@@ -50,43 +50,43 @@ define('_MD_TCW_IMPORT_EXCEL', 'Import %s data as Excel file');
 define('_MD_TCW_SELECT_TO_EDIT', 'Click on the name of the member to edit the Student Information');
 define('_MD_TCW_IMPORT_LINK', "
 <ul>
-  <li> <a href='http://120.115.2.90/modules/student_data/' target='_blank'> Tainan dedicated teacher member data import files made </a> </li>
-   < li> <a href = 'import.xls' > member data import Excel files example </a > </li >
-   <li style = 'color: red;' > only supports xls format(csv, xlsx not support) </li >
+  <li> <a href='https://campus-xoops.tn.edu.tw/modules/student_data/' target='_blank'> Tainan dedicated teacher member data import files made </a> </li>
+   < li> <a href = 'import.xlsx' > member data import Excel files example </a > </li >
+   <li style = 'color: red;' > only supports xlsx format(csv, xls not support) </li >
 </ul > ");
 
-define("_MD_TCW_NO_WEB", "There is no any personal website, wait for the administrator establishment.");
-define("_MD_TCW_NO_WEB_ADMIN", "There are no personal website, ask the administrator as soon as possible to the management page to specify a user can have a personal Web site.");
+define('_MD_TCW_NO_WEB', 'There is no any personal website, wait for the administrator establishment.');
+define('_MD_TCW_NO_WEB_ADMIN', 'There are no personal website, ask the administrator as soon as possible to the management page to specify a user can have a personal Web site.');
 
-define("_MD_TCW_ABOUTUS_HOMEWORK", "Homework");
-define("_MD_TCW_ABOUTUS_SCHEDULE", "Schedule Table");
-define("_MD_TCW_ABOUTUS_NO_HOMEWORK", "No Homework");
-define("_MD_TCW_ABOUTUS_NO_SCHEDULE", "No Schedule");
-define("_MD_TCW_ABOUT_BLOCK_LIST_ADM", "Administrator");
-define("_MD_TCW_ABOUTUS_BLOCK_LIST", "About Us");
-define("_MD_TCW_ABOUT_BLOCK_LIST_STUD", "About Us");
+define('_MD_TCW_ABOUTUS_HOMEWORK', 'Homework');
+define('_MD_TCW_ABOUTUS_SCHEDULE', 'Schedule Table');
+define('_MD_TCW_ABOUTUS_NO_HOMEWORK', 'No Homework');
+define('_MD_TCW_ABOUTUS_NO_SCHEDULE', 'No Schedule');
+define('_MD_TCW_ABOUT_BLOCK_LIST_ADM', 'Administrator');
+define('_MD_TCW_ABOUTUS_BLOCK_LIST', 'About Us');
+define('_MD_TCW_ABOUT_BLOCK_LIST_STUD', 'About Us');
 
-define("_MD_TCW_SEME_CATE", "%s Year");
-define("_MD_TCW_SET_SEME", "Setting %s");
-define("_MD_TCW_SELECT_SEME", "Select %s");
-define("_MD_TCW_NO_MEM", "No any %s");
-define("_MD_TCW_CLASS_PIC", "%s photo");
+define('_MD_TCW_SEME_CATE', '%s Year');
+define('_MD_TCW_SET_SEME', 'Setting %s');
+define('_MD_TCW_SELECT_SEME', 'Select %s');
+define('_MD_TCW_NO_MEM', 'No any %s');
+define('_MD_TCW_CLASS_PIC', '%s photo');
 
-define("_MD_TCW_CLASS_LIST", "All my %s");
-define("_MD_TCW_CLASS_TITLE", "%s title");
-define("_MD_TCW_ADD_CLASS", "Add %s");
+define('_MD_TCW_CLASS_LIST', 'All my %s');
+define('_MD_TCW_CLASS_TITLE', '%s title');
+define('_MD_TCW_ADD_CLASS', 'Add %s');
 define('_MD_TCW_CLASS_SETUP', 'Setup %s');
-define("_MD_TCW_NO_CLASS_PIC", "No %s photo");
-define("_MD_TCW_EDIT_CLASS_TITLE", "%s title");
-define("_MD_TCW_SELECT_CLASS", "Select %s");
+define('_MD_TCW_NO_CLASS_PIC', 'No %s photo');
+define('_MD_TCW_EDIT_CLASS_TITLE', '%s title');
+define('_MD_TCW_SELECT_CLASS', 'Select %s');
 
 define('_MD_TCW_MEM_AMOUNT', '%s amounts');
-define("_MD_TCW_EDIT_MEM", "Edit %s");
+define('_MD_TCW_EDIT_MEM', 'Edit %s');
 define('_MD_TCW_STUDENT_SETUP', 'Setup %s');
-define("_MD_TCW_STUDENT_NO_COPY", "Not to copy, import or manually add or retain the current status");
-define("_MD_TCW_STUDENT_COPY", "copy from \"%s\"");
-define("_MD_TCW_STUDENT_POSITION", "Rows of seats");
-define("_MD_TCW_ADD_STUDENT", "Add %s");
+define('_MD_TCW_STUDENT_NO_COPY', 'Not to copy, import or manually add or retain the current status');
+define('_MD_TCW_STUDENT_COPY', 'copy from "%s"');
+define('_MD_TCW_STUDENT_POSITION', 'Rows of seats');
+define('_MD_TCW_ADD_STUDENT', 'Add %s');
 define('_MD_TCW_ADD_MEM', 'Manually add %s');
 
 define('_MD_TCW_OWNER_NAME', '%s name');
@@ -100,7 +100,7 @@ define('_MD_TCW_ABOUTUS_S2_DEFAULT', 'class');
 define('_MD_TCW_ABOUTUS_S3_TEXT', 'The "student" to');
 define('_MD_TCW_ABOUTUS_S3_DESC', 'The "student" to the new string, for example: members, players and so on。');
 
-define("_MD_TCW_ABOUT_RESET", "Reset");
+define('_MD_TCW_ABOUT_RESET', 'Reset');
 
 define('_MD_TCW_ABOUTUS_S4_TEXT', 'Display Mode');
 define('_MD_TCW_ABOUTUS_S4_DESC', 'How to display members?');
@@ -126,6 +126,8 @@ define('_MD_TCW_ABOUTUS_DEFAULT_CLASS_DESC', 'As a pre-presented classes');
 define('_MD_TCW_ABOUTUS_EDIT_ACCOUNT', 'Edit my account');
 define('_MD_TCW_ABOUTUS_READ_DISCUSS', 'View discuss');
 define('_MD_TCW_ABOUTUS_MY_ACCOUNT', 'My Page');
+define('_MD_TCW_ABOUTUS_HIDE_CLASS', 'Hide Class');
+define('_MD_TCW_ABOUTUS_HIDE_CLASS_DESC', 'The data for this class will no longer be displayed.');
 
 define('_MD_TCW_ABOUTUS_UPLOAD_WORKS', 'Upload works');
 define('_MD_TCW_ABOUTUS_UPLOAD_NOW', 'Upload now');
@@ -154,8 +156,8 @@ define('_MD_TCW_ABOUTUS_NO_PARENT_ACCOUNT', 'The student do not have a parents a
 define('_MD_TCW_ABOUTUS_SEND_PARENT_PASSWD', 'Your password has been sent to %s');
 define('_MD_TCW_ABOUTUS_YOUR_PASSWD', 'Your Password');
 define('_MD_TCW_ABOUTUS_YOUR_PASSWD_EMAIL', 'Hi %s\'s %s:<p>You sign up for a parent account in %s, please click the link below to start it.</p><p>%s</p><p align="right">from <a href="%s">%s</a></p>');
-define('_MD_TCW_ABOUTUS_YOUR_PASSWD', 'Password notification');
-define('_MD_TCW_ABOUTUS_YOUR_PASSWD_EMAIL', 'Hi %s\'s %s :<p>You query your parent account password on %s, your password is as follows:</p><p style="font-size: 24px; color:red;">%s</p><p align="right">From <a href="%s">%s</a></p>');
+//define('_MD_TCW_ABOUTUS_YOUR_PASSWD', 'Password notification');
+//define('_MD_TCW_ABOUTUS_YOUR_PASSWD_EMAIL', 'Hi %s\'s %s :<p>You query your parent account password on %s, your password is as follows:</p><p style="font-size: 150%; color:red;">%s</p><p align="right">From <a href="%s">%s</a></p>');
 
 define('_MD_TCW_ABOUTUS_PARENT_ENABLE', 'Parents account the successful launch notification');
 define('_MD_TCW_ABOUTUS_PARENT_ENABLE_CONTENT', 'Hi %s:<p>%s\'s %s registered a parents account on %s.</p>');
@@ -182,3 +184,7 @@ define('_MD_TCW_ABOUTUS_START', 'Again');
 define('_MD_TCW_ABOUTUS_S8_TEXT', 'Set the function to be used');
 define('_MD_TCW_ABOUTUS_S8_DESC', 'Uncheck the features you do not want');
 define('_MD_TCW_ABOUTUS_ALL_DONT', 'All do not');
+
+define('_MD_TCW_STUDENT_NOTE', 'If you add or modify the class, the top of the file subtitle can not see the name of the new class (if the system default logo), 90% of your browser cache is doing, please press <kbd> Ctrl </ kbd> + <kbd> F5 </ kbd> try.');
+
+define('_MD_TCW_ABOUTUS_ALL', 'All');

@@ -1,48 +1,60 @@
 <?php
-/************** list_work *************/
-function list_work($WebID, $config = array())
+/************** list_work ************
+ * @param       $WebID
+ * @param array $config
+ * @return void
+ */
+function list_work($WebID, $config = [])
 {
-
     global $xoopsDB, $xoopsTpl, $TadUpFiles;
     if (empty($WebID)) {
-        retuen;
+        return;
     }
-    include_once "class.php";
+    require_once __DIR__ . '/class.php';
 
     $tad_web_works = new tad_web_works($WebID);
-    $block         = $tad_web_works->list_all("", $config['limit'], 'return');
+    $block = $tad_web_works->list_all('', $config['limit'], 'return');
+
     return $block;
 }
 
-/************** random_work *************/
+/************** random_work ************
+ * @param       $WebID
+ * @param array $config
+ * @return void
+ */
 
-function random_work($WebID, $config = array())
+function random_work($WebID, $config = [])
 {
-
     global $xoopsDB, $xoopsTpl, $TadUpFiles;
     if (empty($WebID)) {
-        retuen;
+        return;
     }
 
-    include_once "class.php";
+    require_once __DIR__ . '/class.php';
 
     $tad_web_works = new tad_web_works($WebID);
-    $block         = $tad_web_works->list_all("", 1, 'return', '', '', 'order by rand()', $config['limit']);
+    $block = $tad_web_works->list_all('', 1, 'return', '', '', 'order by rand()', $config['limit']);
+
     return $block;
 }
 
-/************** latest_work *************/
+/************** latest_work ************
+ * @param       $WebID
+ * @param array $config
+ * @return void
+ */
 
-function latest_work($WebID, $config = array())
+function latest_work($WebID, $config = [])
 {
-
     global $xoopsDB, $xoopsTpl, $TadUpFiles;
     if (empty($WebID)) {
-        retuen;
+        return;
     }
-    include_once "class.php";
+    require_once __DIR__ . '/class.php';
 
     $tad_web_works = new tad_web_works($WebID);
-    $block         = $tad_web_works->list_all("", 1, 'return', '', '', 'order by WorksDate desc', $config['limit']);
+    $block = $tad_web_works->list_all('', 1, 'return', '', '', 'order by WorksDate desc', $config['limit']);
+
     return $block;
 }

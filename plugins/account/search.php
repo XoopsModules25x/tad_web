@@ -1,28 +1,28 @@
 <?php
+use XoopsModules\Tad_web\Power;
 //搜尋
 function account_search($WebID, $queryarray, $limit = 10)
 {
     global $xoopsDB;
 
     //起始函數
-    include_once XOOPS_ROOT_PATH . "/class/power.php";
-    $power = new power($WebID);
+    $power = new Power($WebID);
 
-    $plugin      = 'account';
-    $plugin_tbl  = 'tad_web_account';
-    $id_col      = 'AccountID';
-    $title_col   = 'AccountTitle';
-    $date_col    = 'AccountDate';
+    $plugin = 'account';
+    $plugin_tbl = 'tad_web_account';
+    $id_col = 'AccountID';
+    $title_col = 'AccountTitle';
+    $date_col = 'AccountDate';
     $content_col = 'AccountDesc';
 
-    $myts = &MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     foreach ($queryarray as $k => $v) {
         $arr[$k] = $myts->addSlashes($v);
     }
     $queryarray = $arr;
 
-    // die(var_export($queryarray));
-    $sql = "SELECT `{$id_col}`,`{$title_col}`,`{$date_col}`, `WebID` FROM " . $xoopsDB->prefix($plugin_tbl) . " WHERE 1";
+    $and_web = $WebID ? " and `WebID`='{$WebID}'" : '';
+    $sql = "SELECT `{$id_col}`,`{$title_col}`,`{$date_col}`, `WebID` FROM " . $xoopsDB->prefix($plugin_tbl) . ' WHERE 1' . $and_web;
 
     if (is_array($queryarray) && $count = count($queryarray)) {
         $sql .= " AND ((`{$title_col}` LIKE '%{$queryarray[0]}%'  OR `{$content_col}` LIKE '%{$queryarray[0]}%' )";
@@ -30,22 +30,23 @@ function account_search($WebID, $queryarray, $limit = 10)
             $sql .= " $andor ";
             $sql .= "(`{$title_col}` LIKE '%{$queryarray[$i]}%' OR  `{$content_col}` LIKE '%{$queryarray[$i]}%' )";
         }
-        $sql .= ") ";
+        $sql .= ') ';
     }
     $sql .= " ORDER BY  `{$date_col}` DESC";
 
     $result = $xoopsDB->query($sql, $limit);
-    $ret    = array();
-    $i      = 0;
-    while ($myrow = $xoopsDB->fetchArray($result)) {
-        $power_result = $power->check_power("read", $id_col, $myrow[$id_col]);
+    $ret = [];
+    $i = 0;
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
+        $power_result = $power->check_power('read', $id_col, $myrow[$id_col]);
         if (!$power_result) {
             continue;
         }
-        $ret[$i]['link']  = "{$plugin}.php?WebID=" . $myrow['WebID'] . "&{$id_col}=" . $myrow[$id_col];
+        $ret[$i]['link'] = "{$plugin}.php?WebID=" . $myrow['WebID'] . "&{$id_col}=" . $myrow[$id_col];
         $ret[$i]['title'] = $myrow[$title_col];
-        $ret[$i]['time']  = substr($myrow[$date_col], 0, 10);
+        $ret[$i]['time'] = mb_substr($myrow[$date_col], 0, 10);
         $i++;
     }
+
     return $ret;
 }

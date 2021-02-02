@@ -1,21 +1,24 @@
 <?php
-include_once "../../../../mainfile.php";
-include_once "../../function.php";
-include_once "../../class/cate.php";
-include_once "class.php";
+
+use XoopsModules\Tadtools\Utility;
+
+require_once dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/function.php';
+require_once dirname(dirname(__DIR__)) . '/class/WebCate.php';
+require_once __DIR__ . '/class.php';
 
 set_time_limit(0);
-ini_set("memory_limit", "150M");
+ini_set('memory_limit', '150M');
 
-$WebID      = empty($_REQUEST['WebID']) ? "" : intval($_REQUEST['WebID']);
-$ScheduleID = empty($_REQUEST['ScheduleID']) ? "" : intval($_REQUEST['ScheduleID']);
+$WebID = empty($_REQUEST['WebID']) ? '' : (int) $_REQUEST['WebID'];
+$ScheduleID = empty($_REQUEST['ScheduleID']) ? '' : (int) $_REQUEST['ScheduleID'];
 
-$schedule      = new tad_web_schedule($WebID);
+$schedule = new tad_web_schedule($WebID);
 $schedule_data = $schedule->get_one_data($ScheduleID);
 $schedule_data = $schedule->get_one_data($ScheduleID);
-$content       = "<h1>{$schedule_data['ScheduleName']}</h1>";
+$content = "<h2>{$schedule_data['ScheduleName']}</h2>";
 $content .= $schedule->get_one_schedule($ScheduleID);
-$html = html5($content, false, false, null, false);
+$html = Utility::html5($content, false, false, null, false);
 $html = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $html);
 $html = preg_replace('/(<[^>]+) style=\'.*?\'/i', '$1', $html);
 $html = preg_replace('/(<[^>]+) class=".*?"/i', '$1', $html);
